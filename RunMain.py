@@ -331,7 +331,7 @@ class Main(QMainWindow):
         # saves auto_save_schema to json file
         dialog = QtWidgets.QFileDialog()
         dialog.setDefaultSuffix('json')
-        name = dialog.getSaveFileName(self, "QFileDialog.getSaveFileName()", 'Save File', 'pairs', '.json')[0]
+        name = dialog.getSaveFileName(self, "QFileDialog.getSaveFileName()", 'Untitled.json', '', '')[0]
         if len(name) == 0:
             pass
         else:
