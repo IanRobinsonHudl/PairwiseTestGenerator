@@ -2,16 +2,17 @@
 # -*- coding: utf-8 -*-
 
 
-from pywiseoverwriteconfirm import *
+from overwriteconfirm import *
 
 
-class PyWiseOverwrite(QtGui.QDialog):
+class Overwrite(QtWidgets.QDialog):
+
     def __init__(self, parent=None):
-        QtGui.QWidget.__init__(self, parent)
+        QtWidgets.QWidget.__init__(self, parent)
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
-        QtCore.QObject.connect(self.ui.buttonOK, QtCore.SIGNAL('clicked()'), self.confirm)
-        QtCore.QObject.connect(self.ui.buttonCancel, QtCore.SIGNAL('clicked()'), self.cancel)
+        self.ui.buttonOK.clicked.connect(self.confirm)
+        self.ui.buttonCancel.clicked.connect(self.cancel)
 
     def confirm(self):
         self.accept()

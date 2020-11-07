@@ -2,35 +2,33 @@
 # -*- coding: utf-8 -*-
 
 
-import metacomm.combinatorics.all_pairs2
+from allpairspy import AllPairs
 import os
 import simplejson
 import sys
 import time
 import xlwt
-import pywisetablehelper
-import RunPyWiseTableAbout
-import RunPyWiseTableHelp
-import RunPyWiseOverwrite
-import RunPyWiseReset
-from pywisetablemain import *
-from PyQt4.QtGui import *
+import RunAbout, RunReset, RunHelp, RunOverwrite, helpers
+from main import *
+from PyQt5 import QtGui, QtCore, QtWidgets
+from PyQt5.QtWidgets import QMainWindow, QApplication
 
 
-class MyComboBox(QtGui.QComboBox):
+class MyComboBox(QtWidgets.QComboBox):
     # dynamically created combobox for constraints table(i.e. created on the fly)
     # connects the combobox to the save_constraints method to allow for auto saving of constraints to data model
     def __init__(self):
-        QtGui.QComboBox.__init__(self)
-        self.connect(self, QtCore.SIGNAL('currentIndexChanged(int)'), self.update)
+        QtWidgets.QComboBox.__init__(self)
+        self.currentIndexChanged.connect(self.update)
+        #self.connect(self, QtCore.SIGNAL('currentIndexChanged(int)'), self.update)
 
     def update(self):
         myapp.save_constraints()
 
 
-class PyWiseMain(QtGui.QMainWindow):
+class Main(QMainWindow):
     def __init__(self, parent=None):
-        QtGui.QWidget.__init__(self, parent)
+        QMainWindow.__init__(self, parent)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
@@ -58,7 +56,7 @@ class PyWiseMain(QtGui.QMainWindow):
         }
         self.processed_pairs = []  # processed set of options for use in pairwise analysis
         self.constraints_exist = False  # used when adding constraints.  If they exist then don't add the headings again
-        self.clip = QtGui.QApplication.clipboard()  # clipboard for copying results table data
+        self.clip = QApplication.clipboard()  # clipboard for copying results table data
         self.font = QtGui.QFont()
 
     def keyPressEvent(self, e):
@@ -76,8 +74,8 @@ class PyWiseMain(QtGui.QMainWindow):
         selected = table.selectedRanges()
         try:
             s = ""
-            for row in xrange(selected[0].topRow(), selected[0].bottomRow() + 1):
-                for col in xrange(selected[0].leftColumn(), selected[0].rightColumn() + 1):
+            for row in range(selected[0].topRow(), selected[0].bottomRow() + 1):
+                for col in range(selected[0].leftColumn(), selected[0].rightColumn() + 1):
                     try:
                         s += str(table.item(row, col).text()) + "\t"
                     except AttributeError:
@@ -111,7 +109,7 @@ class PyWiseMain(QtGui.QMainWindow):
                 while table.columnCount() < columns:
                     self.add_factor()  # adds more columns if more factors exist than the default of 10
                 for c, text in enumerate(row.split('\t')):
-                    table.setItem(first_row + r, first_col + c, QtGui.QTableWidgetItem(text))
+                    table.setItem(first_row + r, first_col + c, QtWidgets.QTableWidgetItem(text))
         except Exception:
             pass
 
@@ -119,9 +117,9 @@ class PyWiseMain(QtGui.QMainWindow):
         # delete method for deleting items from factors table
         table = self.ui.tablePairs
         selected = table.selectedRanges()
-        for row in xrange(selected[0].topRow(), selected[0].bottomRow() + 1):
-            for col in xrange(selected[0].leftColumn(), selected[0].rightColumn() + 1):
-                item = QTableWidgetItem('')
+        for row in range(selected[0].topRow(), selected[0].bottomRow() + 1):
+            for col in range(selected[0].leftColumn(), selected[0].rightColumn() + 1):
+                item = QtWidgets.QTableWidgetItem('')
                 table.setItem(row, col, item)
 
     def excel_export(self):
@@ -156,11 +154,11 @@ class PyWiseMain(QtGui.QMainWindow):
             self.ui.labelMessage.setText('No results to export')
 
     def help(self):
-        pwhelp = RunPyWiseTableHelp.PyWiseHelp(self)
+        pwhelp = RunHelp.Help(self)
         pwhelp.show()
 
     def about(self):
-        pwabout = RunPyWiseTableAbout.PyWiseAbout(self)
+        pwabout = RunAbout.About(self)
         pwabout.show()
 
     @staticmethod
@@ -220,7 +218,7 @@ class PyWiseMain(QtGui.QMainWindow):
         columns = table.columnCount()
         table.insertColumn(columns)
         fact_name = 'Factor ' + str(columns + 1)
-        table.setHorizontalHeaderItem(columns, QtGui.QTableWidgetItem(fact_name))
+        table.setHorizontalHeaderItem(columns, QtWidgets.QTableWidgetItem(fact_name))
 
     def add_option(self):
         # adds a new row to the factors table
@@ -228,7 +226,7 @@ class PyWiseMain(QtGui.QMainWindow):
         rows = table.rowCount()
         table.insertRow(rows)
         op_name = 'Option ' + str(rows)
-        table.setVerticalHeaderItem(rows, QtGui.QTableWidgetItem(op_name))
+        table.setVerticalHeaderItem(rows, QtWidgets.QTableWidgetItem(op_name))
 
     def update_constraints(self):
         # updates existing constraints with new factors/options automatically
@@ -293,19 +291,19 @@ class PyWiseMain(QtGui.QMainWindow):
                 table.insertColumn(0)
                 table.insertRow(0)
                 table.insertRow(1)
-                item = QTableWidgetItem('Constraint')
+                item = QtWidgets.QTableWidgetItem('Constraint')
                 table.setItem(0, 0, item)
                 self.font.setBold(True)
                 item.setFont(self.font)
                 for col, factor in enumerate(self.auto_save_schema['factor_options'], 1):
-                    item = QTableWidgetItem(factor['factorName'])
+                    item = QtWidgets.QTableWidgetItem(factor['factorName'])
                     item.setFont(self.font)
                     table.insertColumn(col)
                     table.setItem(0, col, item)
                     for row in range(table.rowCount()):
                         if row != 0:
                             # set constraint title column
-                            item = QTableWidgetItem('Constraint ' + str(1))
+                            item = QtWidgets.QTableWidgetItem('Constraint ' + str(1))
                             table.setItem(row, 0, item)
                             # set constraint combo boxes
                             combobox = MyComboBox()
@@ -321,7 +319,7 @@ class PyWiseMain(QtGui.QMainWindow):
             table.insertRow(rows)
             for col, factor in enumerate(self.auto_save_schema['factor_options'], 1):
                 # set constraint title column
-                item = QTableWidgetItem('Constraint ' + str(rows))
+                item = QtWidgets.QTableWidgetItem('Constraint ' + str(rows))
                 table.setItem(rows, 0, item)
                 # set constraint combo boxes
                 combobox = MyComboBox()
@@ -331,9 +329,9 @@ class PyWiseMain(QtGui.QMainWindow):
 
     def save_table(self):
         # saves auto_save_schema to json file
-        dialog = QtGui.QFileDialog()
+        dialog = QtWidgets.QFileDialog()
         dialog.setDefaultSuffix('json')
-        name = dialog.getSaveFileName(None, 'Save File', 'pairs', '.json')
+        name = dialog.getSaveFileName(self, "QFileDialog.getSaveFileName()", 'Save File', 'pairs', '.json')[0]
         if len(name) == 0:
             pass
         else:
@@ -354,7 +352,7 @@ class PyWiseMain(QtGui.QMainWindow):
             while table.columnCount() < total_factors:
                 self.add_factor()  # adds more columns if more factors exist than the default of 10
             for col, factor in enumerate(data['factor_options']):
-                fact_item = QTableWidgetItem(factor['factorName'])
+                fact_item = QtWidgets.QTableWidgetItem(factor['factorName'])
                 self.font.setBold(True)
                 fact_item.setFont(self.font)
                 table.setItem(0, col, fact_item)
@@ -363,7 +361,7 @@ class PyWiseMain(QtGui.QMainWindow):
                     while table.rowCount() < total_options:
                         self.add_option()  # adds more rows if more options exist than the default of 10
                     for row, option in enumerate(factor['options'], 1):
-                        op_item = QTableWidgetItem(option)
+                        op_item = QtWidgets.QTableWidgetItem(option)
                         table.setItem(row, col, op_item)
                 except Exception:
                     raise
@@ -390,7 +388,7 @@ class PyWiseMain(QtGui.QMainWindow):
         # select file and load contents. If table contains info then display an overwrite confirmation
         table = self.ui.tablePairs
         constrainttable = self.ui.tableConstraints
-        file = QFileDialog.getOpenFileName()
+        file = QtWidgets.QFileDialog.getOpenFileName()[0]
         if len(file) == 0:
             pass
         elif file.split('.')[-1] != 'json':
@@ -409,7 +407,7 @@ class PyWiseMain(QtGui.QMainWindow):
                         if len(cell_content) != 0:
                             table_content = True
             if table_content:  # if it does contain factors or options then display overwrite confirmation
-                overwrite = RunPyWiseOverwrite.PyWiseOverwrite(self)
+                overwrite = RunOverwrite.Overwrite(self)
                 overwrite.show()
                 if overwrite.exec_():
                     table.clearContents()
@@ -424,7 +422,7 @@ class PyWiseMain(QtGui.QMainWindow):
 
     def clear_table(self):
         # reset all tables, messages and variables
-        overwrite = RunPyWiseReset.PyWiseReset(self)
+        overwrite = RunReset.Reset(self)
         overwrite.show()
         if overwrite.exec_():
             self.goto_factors()
@@ -444,12 +442,12 @@ class PyWiseMain(QtGui.QMainWindow):
             self.ui.buttonAdd.setEnabled(False)
             self.ui.buttonExcel.setEnabled(False)
 
-    # method generates constraints for use in pairwise analysis. Didn't work when stored in pywisetablehelper.py file
+    # method generates constraints for use in pairwise analysis. Didn't work when stored in helpers.py file
     def is_valid_combination(self, row):
         n = len(row)
         rows = len(self.processed_pairs) - 1
         if n > rows:
-            con = pywisetablehelper.get_constraints(self.auto_save_schema['constraints'])
+            con = helpers.get_constraints(self.auto_save_schema['constraints'])
             for i in con:
                 if str(i[1]) == row[i[0]] and str(i[3]) == row[i[2]]:
                     return False
@@ -468,9 +466,9 @@ class PyWiseMain(QtGui.QMainWindow):
         pairwise = None
         try:
             if len(self.auto_save_schema['factor_options']) > 1 and self.auto_save_schema['constraints']:
-                pairwise = metacomm.combinatorics.all_pairs2.all_pairs2(self.processed_pairs, filter_func=self.is_valid_combination)
+                pairwise = AllPairs(self.processed_pairs, filter_func=self.is_valid_combination)
             elif len(self.auto_save_schema['factor_options']) > 1:
-                pairwise = metacomm.combinatorics.all_pairs2.all_pairs2(self.processed_pairs)
+                pairwise = AllPairs(self.processed_pairs)
             elif len(self.auto_save_schema['factor_options']) == 1:
                 self.ui.labelMessage.setStyleSheet('color: red')
                 self.ui.labelMessage.setText('Only one factor defined.  More than one is required to run pairwise analysis')
@@ -487,32 +485,32 @@ class PyWiseMain(QtGui.QMainWindow):
             analysis_output = []
             for i, v in enumerate(pairwise):
                 reduced += 1
-                analysis_output.append(pywisetablehelper.stringclean(str(v)))
+                analysis_output.append(helpers.stringclean(str(v)))
             # insert combinations into results table
             self.ui.buttonExcel.setEnabled(True)
             resulttable = self.ui.tableResults
             resulttable.setColumnCount(0)
             resulttable.setRowCount(0)
-            item = QTableWidgetItem('Test Case')
+            item = QtWidgets.QTableWidgetItem('Test Case')
             self.font.setBold(True)
             item.setFont(self.font)
             resulttable.insertColumn(0)
             resulttable.insertRow(0)
             resulttable.setItem(0, 0, item)
             for col, factor in enumerate(self.auto_save_schema['factor_options'], 1):
-                item = QTableWidgetItem(factor['factorName'])
+                item = QtWidgets.QTableWidgetItem(factor['factorName'])
                 self.font.setBold(True)
                 item.setFont(self.font)
                 resulttable.insertColumn(col)
                 resulttable.setItem(0, col, item)
             for row, combo in enumerate(analysis_output, 1):
                 resulttable.insertRow(row)
-                test_case_name = QTableWidgetItem('tc-' + str(row))
+                test_case_name = QtWidgets.QTableWidgetItem('tc-' + str(row))
                 resulttable.setItem(row, 0, test_case_name)
                 options = combo.replace('\n', '')
                 options = options.split(',')
                 for col, option in enumerate(options, 1):
-                    item = QTableWidgetItem(option)
+                    item = QtWidgets.QTableWidgetItem(option)
                     resulttable.setItem(row, col, item)
 
             self.goto_results()
@@ -522,7 +520,7 @@ class PyWiseMain(QtGui.QMainWindow):
 
 
 if __name__ == "__main__":
-    app = QtGui.QApplication(sys.argv)
-    myapp = PyWiseMain()
+    app = QApplication(sys.argv)
+    myapp = Main()
     myapp.show()
     sys.exit(app.exec_())

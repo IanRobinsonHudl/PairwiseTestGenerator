@@ -2,12 +2,13 @@
 # -*- coding: utf-8 -*-
 
 
-from pywisetablehelp import *
+from help import *
 
 
-class PyWiseHelp(QtGui.QDialog):
+class Help(QtWidgets.QDialog):
+
     def __init__(self, parent=None):
-        QtGui.QWidget.__init__(self, parent)
+        QtWidgets.QWidget.__init__(self, parent)
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
         self.ui.buttonClose.clicked.connect(self.closehelp)

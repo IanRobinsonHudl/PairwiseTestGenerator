@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>635</width>
-    <height>449</height>
+    <width>912</width>
+    <height>577</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>PyWiseCL v4.0</string>
+   <string>Pairwise Test Case Generator</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -291,7 +291,7 @@
            <widget class="QPushButton" name="buttonAddFactor">
             <property name="maximumSize">
              <size>
-              <width>51</width>
+              <width>80</width>
               <height>23</height>
              </size>
             </property>
@@ -304,7 +304,7 @@
            <widget class="QPushButton" name="buttonAddOption">
             <property name="maximumSize">
              <size>
-              <width>51</width>
+              <width>80</width>
               <height>23</height>
              </size>
             </property>
@@ -436,7 +436,7 @@
            </size>
           </property>
           <property name="text">
-           <string>&amp;Generate Pairwise Analysis</string>
+           <string>&amp;Generate Tests</string>
           </property>
          </widget>
         </item>
@@ -484,8 +484,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>635</width>
-     <height>21</height>
+     <width>912</width>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -603,7 +603,7 @@
   <tabstop>buttonClear</tabstop>
  </tabstops>
  <resources>
-  <include location="Resource_Files.qrc"/>
+  <include location="resources.qrc"/>
  </resources>
  <connections/>
 </ui>
