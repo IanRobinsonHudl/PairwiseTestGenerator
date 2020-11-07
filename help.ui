@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>404</width>
+    <height>343</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <stylestrategy>PreferAntialias</stylestrategy>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Help</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_2">
+   <item row="0" column="0" colspan="2">
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <widget class="QTextBrowser" name="textBrowser">
+       <property name="html">
+        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color:#ffffff;&quot;&gt;&lt;span style=&quot; font-family:'Courier New'; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;PyWiseCL is an open source, cross platform Python tool for creating pairwise test case combinations.&lt;br /&gt;It is written in Python 2.7.5 and requires that the Metacomm all_pairs 2.0.1 Python library is installed.&lt;br /&gt;&lt;br /&gt;Add factors and options to the Factors tab.  For example, for a test on a font selection dialog, the factors and options might be: -&lt;br /&gt;---&lt;br /&gt;Type - Times New Roman,Courier,Arial,Serif&lt;br /&gt;Size - 8,10,12,14&lt;br /&gt;Style - Bold,Underline,Italic&lt;br /&gt;---&lt;br /&gt;Any factors with no options or options with no factors will be excluded from the analysis and when saving to file.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color:#ffffff;&quot;&gt;&lt;span style=&quot; font-family:'Courier New'; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;PyWiseCL will output an efficient set of pairwise test combinations to the Results tab.  From here they can be copied or exported to Excel.&lt;br /&gt;&lt;br /&gt;Constraints can also be applied to the pairwise analysis.&lt;br /&gt;Constraints are invalid combinations of items that can be excluded from the analysis.&lt;br /&gt;They are applied on the Constraints tab, dynamically updating based on the contents of the Factors tab.  Each row represents a separate constraint.&lt;br /&gt;So for example if Arial and Bold represent an invalid pair, the constraint should look like this:&lt;br /&gt;---&lt;br /&gt;Arial, -, Bold&lt;br /&gt;---&lt;br /&gt;Multiple constraints may be specified with each containing a minimum of 2 items.  More than 2 items can also be specified:&lt;br /&gt;---&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color:#ffffff;&quot;&gt;&lt;span style=&quot; font-family:'Courier New'; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Arial, -, Bold&lt;br /&gt;Times New Roman, 10, Bold&lt;br /&gt;---&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color:#ffffff;&quot;&gt;&lt;span style=&quot; font-family:'Courier New'; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Any constraints with less than one option selected will be excluded from the analysis and when saving to file.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color:#ffffff;&quot;&gt;&lt;span style=&quot; font-family:'Courier New'; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Click Generate Pairwise Analysis to run the analysis.  Results are output to the Results tab where they can be exported directly to file, or copy, pasted into a spreadsheet.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color:#ffffff;&quot;&gt;&lt;span style=&quot; font-family:'Courier New'; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Click Reset to reset the tables.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color:#ffffff;&quot;&gt;&lt;span style=&quot; font-family:'Courier New'; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Open and Save files via the tool bar.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; background-color:#ffffff;&quot;&gt;&lt;span style=&quot; font-family:'Courier New'; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;&lt;br /&gt;KNOWN BUG: If you have more constraints than there are rows of elements, e.g. 8 constraints and only 7 rows of elements&lt;br /&gt;then the 7th constraint does not get applied&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buttonClose">
+       <property name="maximumSize">
+        <size>
+         <width>75</width>
+         <height>23</height>
+        </size>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string>Close</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
