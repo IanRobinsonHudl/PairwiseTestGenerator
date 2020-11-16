@@ -57,10 +57,10 @@
             </font>
            </property>
            <property name="background">
-            <color>
+            <color alpha="0">
              <red>255</red>
              <green>255</green>
-             <blue>127</blue>
+             <blue>255</blue>
             </color>
            </property>
           </row>

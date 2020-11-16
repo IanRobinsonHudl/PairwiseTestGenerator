@@ -40,7 +40,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         item.setFont(font)
-        item.setBackground(QtGui.QColor(255, 255, 127))
+        item.setBackground(QtGui.QColor(255, 255, 255, 0))
         self.tablePairs.setVerticalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
         self.tablePairs.setVerticalHeaderItem(1, item)
