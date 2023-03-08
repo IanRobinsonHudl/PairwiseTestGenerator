@@ -6,7 +6,7 @@ clone project
 
 Navigate to project root
 
-Set up virtual environment: `python venv env/`
+Set up virtual environment: `python3 -m venv env/`
 
 Activate virtual environment: `. ./env/bin/activate`
 
